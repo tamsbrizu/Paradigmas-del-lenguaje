@@ -1,0 +1,93 @@
+package ejercicio2;
+
+public class Frecuente{ 
+    private int numero;
+    private String dni;
+    private String nombre;
+    private String apellido;
+    private int millas;
+    
+    public Frecuente(int numero, String dni, String nombre, String apellido, int millas){
+        this.numero = numero;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.millas = millas;
+    }
+    
+    // Getters de los atributos
+    
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public int getMillas() {
+        return millas;
+    }
+    
+    // Setters de los atributos
+    
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setMillas(int millas) {
+        this.millas = millas;
+    }
+    
+    
+    // ACUMULAR MILLAS
+    public int acumularMillas (int cantMillasR){
+        cantMillasR += this.millas;
+        return cantMillasR;
+    }
+    
+    
+    // CANJEAR MILLAS
+    public int canjearMillas(int millasC){
+        int r = 0;
+        if (millasC < acumularMillas(0)){
+            r = this.millas - millasC;
+        } 
+        else {
+            System.out.println("ERROR");
+        }
+        return r;
+    }
+    
+    // TOSTRING
+    
+    @Override
+    public String toString (){
+        return  "\n NUMERO DE VIAJERO: " + numero +
+                "\n DNI DEL VIAJERO: " + dni +
+                "\n NOMBRE DEL VIAJERO: " + nombre+
+                "\n APELLIDO DEL VIAJERO: " + apellido +
+                "\n MILLAS DEL VIAJERO: " + millas;             
+    }
+    
+}
