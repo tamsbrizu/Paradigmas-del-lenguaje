@@ -1,0 +1,175 @@
+package ejercicio3;
+
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
+
+
+public class GestorViajeros {
+    private final List<Viajero> viajeros;
+
+
+    public GestorViajeros(){
+
+        viajeros = new ArrayList<>();
+    }
+    
+    
+    /* a) “Cargar Viajero”: Si se intenta cargar un viajero con dni existente → lanzar
+    una excepción.
+    b) “Opciones del menú que piden el DNI”: Si el DNI ingresado no corresponde
+    a un viajero registrado → lanzar una excepción. */
+    
+    // a) Cargar viajero: registrar un nuevo viajero.
+    public void cargarViajero() throws viajeroYaExistente{
+        try{
+            Scanner scanner = new Scanner(System.in);
+        
+            System.out.println("Ingrese numero viajero:");
+            int num = scanner.nextInt();
+            scanner.nextLine();
+            
+            int p1 = buscarPorNumero(num);
+            if (p1 != -1){
+                throw new viajeroYaExistente("YA EXISTE ESTE VIAJERO");
+            }
+            
+
+            System.out.println("Ingrese numero DNI:");
+            String dni = scanner.nextLine();
+            
+            int p2 = buscarPorDni(dni);
+            if (p2!=-1){
+                throw new viajeroYaExistente("YA EXISTE ESTE VIAJERO.");
+            }
+            
+
+            System.out.println("Ingrese nombre:");
+            String nom = scanner.nextLine();
+
+            System.out.println("Ingrese apellido:");
+            String ape = scanner.nextLine();
+
+            System.out.println("Ingrese la cantidad de millas:");
+            int millas = scanner.nextInt();
+            scanner.nextLine();
+
+            Viajero viajero = new Viajero(num, dni, nom, ape, millas);
+            viajeros.add (viajero);
+        } catch (InputMismatchException e){
+            System.err.println("Intente de nuevo");
+        }
+    }
+    
+    public static void controlarExistencia (int p, int ban) throws MiExcepcion{
+        if(ban == 1){
+            throw new  MiExcepcion("El viajero ya existe.");
+        }
+    }
+    
+
+    // BUSCAR VIAJERO POR DNI
+    public int buscarPorDni(String dni){
+        int p = -1;
+        int indice = 0;
+        
+        while (indice < viajeros.size() && p == -1){
+            if (dni.equals(viajeros.get(indice).getDni())){
+                p = indice;
+            } else {
+                indice += 1;
+            }
+        }
+        return p;
+    }
+    
+
+   // BUSCAR VIAJERO POR NUMERO
+    public int buscarPorNumero (int numero){
+        int p = -1;
+        int indice = 0;
+        
+        while (indice < viajeros.size() && p == -1){
+            if (numero == viajeros.get(indice).getNumero()){
+                p = indice;
+            } else {
+                indice += 1;
+            }
+        }
+        return p;
+    }
+    
+    /* b) Mostrar viajero: dado el número de un viajero mostrar todos sus datos (use el
+    método toString). */
+    
+    public void mostrarDatos(int numero) throws MiExcepcion{
+        int p = buscarPorNumero(numero);
+        if (p != -1){
+            System.out.println(viajeros.get(p).toString());
+        } else {
+            throw new MiExcepcion("No existe el viajero con ese numero");
+        }
+    }
+    
+    /* c) Consultar Cantidad de Millas: se ingresa un dni y si corresponde a un viajero
+    registrado, retorna la cantidad de millas del viajero */
+    
+    public int consultarMillas (String dni) throws viajeroNoExistente{
+        int p = buscarPorDni(dni);
+        if (p != -1){
+            return viajeros.get(p).getMillas();
+        } else {
+            throw new viajeroNoExistente ("No existe el Viajero con ese DNI");
+        }
+    }
+    
+   /* d) Acumular Millas: se ingresa un dni y cantidad de millas, si corresponde a un
+    viajero registrado se incrementa las millas acumuladas del viajero en la
+    cantidad de millas dadas. */
+    
+    public void acumularMillasV (String dni, int millasA) throws viajeroNoExistente{
+        int p = buscarPorDni(dni);
+        if (p != -1){
+            int mA = viajeros.get(p).acumularMillas(millasA);
+            viajeros.get(p).setMillas(mA);
+            System.out.println ("\nMillas Acumuladas Correctamente.");
+            System.out.println(viajeros.get(p).toString());
+        } else {
+            throw new viajeroNoExistente("No Existe el Viajero con ese DNI");
+        }
+    }
+    
+    /* e) Canjear Millas: se ingresa un dni y cantidad de millas, si corresponde a un
+    viajero registrado se decrementa las millas acumuladas del viajero en la
+    cantidad de millas dadas. */
+    
+    public void canjearMillasV (String dni, int millasB) throws viajeroNoExistente{
+        int p = buscarPorDni(dni);
+        if (p != -1){
+            int mC = viajeros.get(p).canjearMillas(millasB);
+            viajeros.get(p).setMillas(mC);
+            System.out.println ("\nMillas Canjeadas Correctamente.");
+            System.out.println(viajeros.get(p).toString());
+        } else {
+            throw new viajeroNoExistente("No Existe el Viajero con ese DNI");
+        }
+    }
+    
+    /* f) Mejor viajero: Mostrar los datos del/ los viajeros con mayor cantidad de millas */
+        public void mostrarViajeroMMax(){
+        int max = -99;
+        
+        for (int i = 0; i < viajeros.size(); i ++){
+            if (viajeros.get(i).getMillas() > max){
+                max = viajeros.get(i).getMillas();
+            }
+        }
+        
+        for (int i = 0; i < viajeros.size(); i ++){
+            if (viajeros.get(i).getMillas() == max){
+                System.out.print(viajeros.get(i).toString());
+            }
+        }
+    } 
+}
