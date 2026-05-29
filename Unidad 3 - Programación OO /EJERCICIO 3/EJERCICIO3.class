@@ -1,0 +1,11 @@
+
+package ejercicio3;
+
+public class EJERCICIO3 {
+
+    public static void main(String[] args) {
+        GestorViajeros g = new GestorViajeros();
+        Menu m = new Menu(g);
+        m.mostrarMenu();
+    }   
+}
