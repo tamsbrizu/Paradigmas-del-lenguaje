@@ -1,0 +1,14 @@
+
+package ejercicio3;
+
+public class viajeroNoExistente extends Exception{
+    
+    public viajeroNoExistente() {
+        super();
+    }
+    
+    public viajeroNoExistente(String mensage) {
+        super(mensage);
+    }
+}
+
