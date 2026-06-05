@@ -1,7 +1,7 @@
 package ejercicio3consteams;
 import java.util.Scanner;
 
-/* SE PUEDE PONER LOS BREAKS EN EL SWITCH → INFORMACION VALIDA DE UNA LIBRO JAJA SUPUESTAMENTE */
+/* SE PUEDEN PONER LOS BREAKS EN EL SWITCH → INFORMACION VALIDA DE UN LIBRO JAJA SUPUESTAMENTE */
         
         
 public class Menu {
