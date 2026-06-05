@@ -1,0 +1,113 @@
+
+package ejercicio3consteams;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+
+public class GestorV {
+    private List<FrecuenteV> viajeros;
+    
+    public GestorV(){
+        viajeros = new ArrayList<>();
+    }
+    
+    public List<FrecuenteV> getViajeros() {
+        return viajeros;
+    }
+    
+    
+    public void setViajeros(List<FrecuenteV> viajeros) {
+        this.viajeros = viajeros;
+    }
+    
+    public void agregarViajero(){
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Ingrese numero viajero:");
+        int num = scanner.nextInt();
+        scanner.nextLine();
+            
+
+        System.out.println("Ingrese numero DNI:");
+        String dni = scanner.nextLine();
+            
+
+        System.out.println("Ingrese nombre:");
+        String nom = scanner.nextLine();
+
+        System.out.println("Ingrese apellido:");
+        String ape = scanner.nextLine();
+
+        System.out.println("Ingrese la cantidad de millas:");
+        int millas = scanner.nextInt();
+        scanner.nextLine();
+
+        FrecuenteV viajero = new FrecuenteV(num, dni, nom, ape, millas);
+        viajeros.add (viajero);
+    }
+   
+    //
+    
+    // b) Mostrar viajero: dado el número de un viajero mostrar todos sus datos
+    
+    public void mostrarViajero(int numero){
+        viajeros.stream().filter(x -> x.getNumero() == numero).findFirst().ifPresent(
+        x -> System.out.println(x.toString()));
+    }
+    
+    // c) Consultar Cantidad de Millas: se ingresa un dni y si corresponde a un viajero
+    //registrado, retorna la cantidad de millas del viajero.
+    
+    public void consultarMillas(String dni){
+        viajeros.stream().filter(x -> x.getDni().equals(dni)).findFirst().ifPresentOrElse(
+                x -> System.out.println(x.getMillas()), 
+                () -> System.out.println("ERROR. NO HAY VIAJERO CON ESE DNI"));
+    }
+    
+    // d) Acumular Millas: se ingresa un dni y cantidad de millas, si corresponde a un  
+   //viajero registrado se incrementa las millas acumuladas del viajero en la
+    //cantidad de millas dadas. 
+    
+    public void acumularMillasG(String dni, int cantMillasA){
+       viajeros.stream().filter(x -> x.getDni().equals(dni)).findFirst().ifPresentOrElse(
+       x -> {
+           int ma = x.acumularMillas(cantMillasA);
+           x.setMillas(ma);
+           System.out.println(x.toString());
+       }, 
+       () -> System.out.println("ERROR. NO HAY VIAJERO CON ESE DNI"));
+    }
+    
+    // e) Canjear Millas: se ingresa un dni y cantidad de millas, si corresponde a un
+//viajero registrado se decrementa las millas acumuladas del viajero en la
+//cantidad de millas dadas. 
+    
+    public void canjearMillasG(String dni, int cantMillasA){
+       viajeros.stream().filter(x -> x.getDni().equals(dni)).findFirst().ifPresentOrElse(
+       x -> {
+           int ma = x.canjearMillas(cantMillasA);
+           x.setMillas(ma);
+           System.out.println(x.toString());
+       }, 
+       () -> System.out.println("ERROR. NO HAY VIAJERO CON ESE DNI"));
+    }
+    
+// f) Mejor viajero: Mostrar los datos del/ los viajeros con mayor cantidad de millas.
+    
+    public void mejorViajero(){
+        int maxx = viajeros.stream().map(x -> x.getMillas()).distinct().reduce(0, Integer :: max);
+        
+        viajeros.stream().filter(x -> x.getMillas() == maxx).forEach(x -> System.out.println(x.toString()));
+    }
+    
+    
+/* NOTAS */
+/* FILTER → FILTRA LOS ELEMENTOS QUE CUMPLAN LA CONDICION
+MAP → SIRVE PARA EXTRAER COSAS O APLICAR FUNCIONES
+CUANDO USAMOS IFPRESENTEORELSE Y QUEREMOS COLOCAR VARIAS LINEAS SE COLOCA ("{}") Y LAS LINEAS DE CODIGO DENTRO DE ESTAS
+FOREACH → SE UTILIZA CUANDO TENEMOS MUCHOS ELEMENTOS FILTRADO/MAPEADOS/ETC 
+MAPTOINT() → PARA TRABAJAR SOBRE ENTEROS Y APLICAR FUNCIONES COMO SUM(), AVG(), COUNT()
+ANYMATCH → PARA SABER SI ALGO EXISTE (DEVUELVE TRUE O FALSE) */
+}
