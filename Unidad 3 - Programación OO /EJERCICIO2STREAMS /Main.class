@@ -1,0 +1,10 @@
+package ejercicio3consteams;
+
+public class EJERCICIO3CONSTEAMS {
+
+    public static void main(String[] args) {
+        GestorV g = new GestorV();
+        Menu m = new Menu(g);
+        m.mostrarMenu();
+    }   
+}
