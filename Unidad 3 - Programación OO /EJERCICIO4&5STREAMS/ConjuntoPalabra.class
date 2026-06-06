@@ -1,0 +1,47 @@
+package ejercicio4stream;
+import java.util.List;
+import java.util.ArrayList;
+
+public class ConjuntoPalabra {
+    private List<Palabra> conjuntoP;
+
+    public void setConjuntoP(List<Palabra> conjuntoP) {
+        this.conjuntoP = conjuntoP;
+    }
+
+    public List<Palabra> getConjuntoP() {
+        return conjuntoP;
+    }
+    
+    public ConjuntoPalabra(){
+        conjuntoP = new ArrayList<>();
+    }
+    
+    public void agregarPalabara(String palabra){
+        Palabra p = new Palabra(palabra);
+        conjuntoP.add(p);
+    }
+    
+    public boolean buscar(String palabra){
+       return conjuntoP.stream().anyMatch(x -> x.getPalabra().equals(palabra));
+    }
+    
+    public void mostrar(){
+        conjuntoP.stream().forEach(x -> System.out.println(x.toString()));
+    }
+    
+    public void incrementar(String palabra){
+        conjuntoP.stream().filter(x -> x.getPalabra().equals(palabra)).findFirst().ifPresent(
+        x -> x.incrementar());
+    } 
+    
+    public void incrementarCantidad (String palabra, int c){
+        conjuntoP.stream().filter(x -> x.getPalabra().equals(palabra)).findFirst().ifPresent(
+        x -> x.incrementarCant(c));
+    }
+    
+    public void cambiarCantidad(String palabra, int c){
+        conjuntoP.stream().filter(x -> x.getPalabra().equals(palabra)).findFirst().ifPresent(
+        x -> x.setCantidadVeces(c));        
+    }
+}
