@@ -1,0 +1,88 @@
+package ejercicio4stream;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Arrays;
+import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
+
+public class MiHilo extends Thread{
+    private String rutaArchivo;
+    private ConjuntoPalabra conjuntoP;
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
+    }
+
+    public void setConjuntoP(ConjuntoPalabra conjuntoP) {
+        this.conjuntoP = conjuntoP;
+    }
+
+    public String getRutaArchivo() {
+        return rutaArchivo;
+    }
+
+    public ConjuntoPalabra getConjuntoP() {
+        return conjuntoP;
+    }
+    
+    public MiHilo(String ruta, ConjuntoPalabra p){
+        this.rutaArchivo = ruta;
+        this.conjuntoP = p;
+    }
+    
+    @Override 
+    public void run(){
+        try(BufferedReader buffer = new BufferedReader(new FileReader(this.rutaArchivo))){
+            String texto;
+            while ((texto = buffer.readLine()) != null){
+                limpiarSignos(texto);
+            }
+        } catch (IOException e){
+            System.err.println(e.getMessage());
+        }
+    }
+    
+    public List limpiarSignos(String texto){
+        
+        // pasar texto a minusculas
+        String textoM = texto.toLowerCase();
+        
+        // Limpiar simbolos como "," y "."
+        String textoLimpio = textoM.replaceAll("[,.?¿!¡]", "");
+        
+        // Dividir el texto en un arreglo con split
+        String [] textoArreglo = textoLimpio.split("\\s+");
+        
+        List<String> textoListo = limpiarStopwords(textoArreglo);
+        
+        return textoListo;
+    }
+    
+    public List limpiarStopwords(String[] texto){
+        String [] Stopwords = {"el", "la", "y", "de", "los", "las"};
+        
+        List<String> nuevoTexto = new ArrayList<>();
+
+        
+        for (String p : texto){
+            String palabra = p.trim();
+            
+            
+            if(!Arrays.asList(Stopwords).contains(palabra)){
+                nuevoTexto.add(palabra);
+                
+                boolean band = conjuntoP.buscar(palabra);
+            
+                if (band == true){
+                    conjuntoP.incrementar(palabra);
+                } else {
+                    conjuntoP.agregarPalabara(palabra);
+                }
+            } 
+        }
+        
+        return nuevoTexto;
+    }
+    
+}
