@@ -1,0 +1,43 @@
+package ejercicio4stream;
+
+public class Palabra {
+    String palabra;
+    int cantidadVeces;
+    
+    public Palabra(String palabra){
+        this.palabra = palabra;
+        this.cantidadVeces = 1;
+    }
+    
+    public String getPalabra(){
+        return palabra;
+    }
+    
+    public int getCantidadVeces(){
+        return cantidadVeces;
+    }
+    
+    public void setPalabra(String palabra){
+        this.palabra = palabra;
+    }
+    
+    public void setCantidadVeces(int cantidadVeces){
+        this.cantidadVeces = cantidadVeces;
+    }
+    
+    public void incrementar(){
+        this.cantidadVeces += 1;
+    }
+    
+    public void incrementarCant(int p){
+        this.cantidadVeces += p;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return "\nPalabra: " + palabra +
+                "\nCantidad De Veces: " + cantidadVeces;
+    }
+
+}
