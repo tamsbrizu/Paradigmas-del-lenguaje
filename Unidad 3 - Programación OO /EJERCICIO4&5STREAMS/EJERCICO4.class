@@ -1,0 +1,91 @@
+package ejercicio4stream;
+
+import java.util.List;
+
+
+public class EJERCICIO4STREAM {
+    public static void main(String[] args) {
+        
+        String ruta1 = "Texto1.txt";
+        String ruta2 = "Texto2.txt";
+       
+        ConjuntoPalabra cp1 = new ConjuntoPalabra();
+        
+        ConjuntoPalabra cp2 = new ConjuntoPalabra();
+        
+        ConjuntoPalabra cp = new ConjuntoPalabra();
+        
+        MiHilo hilo1 = new MiHilo(ruta1, cp1);
+        MiHilo hilo2 = new MiHilo(ruta2, cp2);
+        
+        hilo1.start();
+        hilo2.start();
+        
+        
+        try {
+            hilo1.join();
+            hilo2.join();
+        } catch (InterruptedException e){
+            System.err.println(e.getMessage());
+        }
+        
+        //System.out.println("\nCONJUNTO DE PALABRAS DEL HILO NUMERO 1:");
+        //cp1.mostrar();
+        
+        //System.out.println("\nCONJUNTO DE PALABRAS DEL HILO NUMERO 2:");
+        //cp2.mostrar();
+        
+        System.out.println("\nCONJUNTO DE PALABRAS COMPARTIDO.");
+        
+        List<Palabra> texto = cp1.getConjuntoP();
+        for (Palabra pa: texto){
+            String p = pa.getPalabra();
+            int c = pa.getCantidadVeces();
+            
+            cp.agregarPalabara(p);
+            cp.cambiarCantidad(p, c);
+        }
+        
+        
+        
+        List<Palabra> palabras = cp2.getConjuntoP();
+        for (Palabra palabra: palabras){
+            String p = palabra.getPalabra();
+            int c = palabra.getCantidadVeces();
+            boolean band = cp.buscar(p);
+            if(band == true){
+                cp.incrementarCantidad(p, c);
+            } else {
+                cp.agregarPalabara(p);
+            }
+        }
+        
+        cp.mostrar();
+    }
+    
+    
+    /* EJERCICIO 5: USAR EL MISMO GESTOR → CONJUNTO DE PALABRAS 
+            String ruta1 = "Texto1.txt";
+        String ruta2 = "Texto2.txt";
+        
+        ConjuntoPalabra cp = new ConjuntoPalabra();
+        
+        MiHilo hilo1 = new MiHilo(ruta1, cp);
+        MiHilo hilo2 = new MiHilo(ruta2, cp);
+        
+        hilo1.start();
+        hilo2.start();
+        
+        
+        try {
+            hilo1.join();
+            hilo2.join();
+        } catch (InterruptedException e){
+            System.err.println(e.getMessage());
+        }
+        
+        //System.out.println("\nCONJUNTO DE PALABRAS DEL HILO NUMERO 1:");
+        cp.mostrar();
+    */
+    
+}
