@@ -1,0 +1,30 @@
+%% 10. Definir borrar(X,Lista,Resultado) que elimine todas las apariciones.
+11. Definir reemplazar(X,Y,Lista,Resultado) que cambie X por Y.
+12. Definir maximo(Lista,Max).
+
+10. elim(X,[],[]).
+elim(X,[X|Y],Z) :- !, elim(X,Y,Z).
+elim(X,[Y|H],[Y|Z]) :- elim(X,H,Z).
+
+11. reemplazar(X,Y,[],[]).
+reemplazar(X,Y,[X|H],[Y|Z]) :- !, reemplazar(X,Y,H,Z).
+reemplazar(X,Y,[F|H], [F|Z]) :- reemplazar(X,Y,H,Z).
+
+12. -------
+
+%% 13. Definir sublista(Sub,Lista) que verifique si una lista está contenida.
+14. Definir interseccion(L1,L2,R) elementos comunes.
+15. Definir union(L1,L2,R) sin repetir.
+16. Definir sin_repetidos(Lista,R).
+17. Definir pares(Lista,R) que devuelva solo pares.
+18. Definir impares(Lista,R).
+
+
+13. -------
+
+14. interseccion_comunes(L1,L2,R) :- union(L1,L2,R).
+union([],_,[]).
+union([X|L1], L2, [X|L3]) :- miembro(X,L2), union(L1,L2,L3).
+union([X|L1], L2, L3) :- not(miembro(X,L2)), union(L1,L2,L3).
+miembro(X,[X|_]).
+miembro(X,[_|Y]) :- miembro(X,Y).
