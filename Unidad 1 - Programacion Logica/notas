@@ -1,0 +1,4 @@
+persona(elena_perez, fecha(4,junio,2023), menor)]
+
+persona(juan_garcia, fecha(5,enero,2010), estudiante), 
+    persona(maria_garcia, fecha(12,abril,2012), estudiante)
